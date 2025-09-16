@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支持Ninimaths开发 - 请开发者喝咖啡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #4A90E2, #357abd);
+            border-radius: 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 30px;
+            color: white;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .payment-section {
+            margin: 40px 0;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .payment-method {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .payment-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .alipay-title {
+            color: #1677ff;
+        }
+
+        .wechat-title {
+            color: #07c160;
+        }
+
+        .qr-code {
+            width: 180px;
+            height: 180px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            margin: 0 auto 15px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #999;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .amount-suggestion {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .thank-you {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .thank-you h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .thank-you p {
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Modal styles for image zoom */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            cursor: pointer;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            opacity: 0.7;
+        }
+
+        .qr-code img {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .qr-code img:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .payment-methods {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .qr-code {
+                width: 160px;
+                height: 160px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 15px;
+            }
+
+            .qr-code {
+                width: 140px;
+                height: 140px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="app-icon">📱</div>
+            <h1>支持 Ninimaths 开发</h1>
+            <p class="subtitle">感谢您使用我们的数学练习应用！<br>您的支持是我们继续改进的动力</p>
+        </div>
+
+
+        <div class="payment-section">
+            <h2 style="color: #333; margin-bottom: 10px; font-size: 22px;">请开发者喝咖啡 ☕</h2>
+            <p style="color: #666; margin-bottom: 20px;">任意金额都是对我们最大的鼓励</p>
+
+            <div class="payment-methods">
+                <div class="payment-method">
+                    <div class="payment-title alipay-title">💙 支付宝</div>
+                    <div class="qr-code">
+                        <img src="recivePicture/wechat-qr.jpg" alt="支付宝收款码" id="alipay-img" onclick="openModal('alipay-img')" onerror="this.parentElement.innerHTML='支付宝收款码加载失败'">
+                    </div>
+                    <div class="amount-suggestion">建议金额：￥5 - ￥50</div>
+                </div>
+
+                <div class="payment-method">
+                    <div class="payment-title wechat-title">💚 微信支付</div>
+                    <div class="qr-code">
+                        <img src="recivePicture/alipay-qr.jpg" alt="微信收款码" id="wechat-img" onclick="openModal('wechat-img')" onerror="this.parentElement.innerHTML='微信收款码加载失败'">
+                    </div>
+                    <div class="amount-suggestion">建议金额：￥5 - ￥50</div>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #999; font-size: 12px;">
+            <p>🔒 支付安全由支付宝和微信保障</p>
+            <p style="margin-top: 5px;">如有问题，请通过应用内"意见反馈"联系我们</p>
+        </div>
+    </div>
+
+    <!-- Modal for image zoom -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // 打开模态框显示放大图片
+        function openModal(imgId) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const img = document.getElementById(imgId);
+
+            modal.style.display = 'block';
+            modalImg.src = img.src;
+            modalImg.alt = img.alt;
+
+            // 阻止事件冒泡
+            event.stopPropagation();
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+
+        // 按ESC键关闭模态框
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // 简单的点击统计（可选）
+        document.addEventListener('DOMContentLoaded', function() {
+            const paymentMethods = document.querySelectorAll('.payment-method');
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    // 可以在这里添加点击统计逻辑
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
